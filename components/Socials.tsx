@@ -1,21 +1,24 @@
-import { GitHubBrandIcon } from "@/public/assets/icons/GitHubBrandIcon"
+import { GitHub_Dark } from "@/public/assets/icons/GitHub_Dark"
 import { MailIcon } from "@/public/assets/icons/MailIcon"
-
+import { LinkedInIcon } from "@/public/assets/icons/LinkedInIcon"
 import Link from "next/link"
 
 const socialLinks = [
   {
-    icon: GitHubBrandIcon,
-    href: "https://github.com/yourusername",
+    icon: GitHub_Dark,
+    href: "https://github.com/ksguo",
     label: "GitHub",
-    bg: "bg-uk-background-primary-dark",
   },
   {
     icon: MailIcon,
     href: "mailto:kesheng.guo510@gmail.com",
     label: "Email",
-    bg: "bg-uk-red-light",
-  }
+  },
+  {
+    icon: LinkedInIcon,
+    href: "https://www.linkedin.com/in/kesheng-guo/",
+    label: "LinkedIn",
+  },
 ]
 
 const Socials = () => {
@@ -27,11 +30,9 @@ const Socials = () => {
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={social.label}
+            className="block w-[30px] h-[30px] hover:scale-110 transition-transform"
           >
-            <div className={`p-2 w-8 h-8 flex items-center justify-center rounded-full text-white ${social.bg} transition-colors`}>
-              <social.icon />
-            </div>
+            <social.icon className="w-full h-full scale-75" />
           </Link>
           <span className="absolute hidden group-hover:inline-block -bottom-7 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded-md whitespace-nowrap">
             {social.label}
