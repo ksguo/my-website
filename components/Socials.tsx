@@ -1,6 +1,7 @@
-import { GitHub_Dark } from "@/public/assets/icons/GitHub_Dark"
-import { MailIcon } from "@/public/assets/icons/MailIcon"
-import { LinkedInIcon } from "@/public/assets/icons/LinkedInIcon"
+import { GitHub_Dark } from "@/public/assets/icons/platform/GitHub_Dark"
+import { MailIcon } from "@/public/assets/icons/platform/MailIcon"
+import { LinkedInIcon } from "@/public/assets/icons/platform/LinkedInIcon"
+import { WangyiyunIcon } from "@/public/assets/icons/platform/WangyiyunIcon"
 import Link from "next/link"
 
 const socialLinks = [
@@ -19,6 +20,11 @@ const socialLinks = [
     href: "https://www.linkedin.com/in/kesheng-guo/",
     label: "LinkedIn",
   },
+  {
+    icon: WangyiyunIcon,
+    href: "https://music.163.com/#/user/home?id=276608594",
+    label: "网易云音乐",
+  }
 ]
 
 const Socials = () => {
@@ -32,7 +38,7 @@ const Socials = () => {
             rel="noopener noreferrer"
             className="block w-[30px] h-[30px] hover:scale-110 transition-transform"
           >
-            <social.icon className="w-full h-full scale-75" />
+            <social.icon className="w-full h-full scale-90" />
           </Link>
           <span className="absolute hidden group-hover:inline-block -bottom-7 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded-md whitespace-nowrap">
             {social.label}

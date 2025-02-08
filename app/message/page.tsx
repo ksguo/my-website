@@ -16,7 +16,7 @@ const Message = () => {
   const [mode, setMode] = useState<"normal" | "insert">("normal")
 
   return (
-    <section className="bg-uk-background-secondary-light h-full flex items-center">
+    <section className="bg-uk-background-primary-light h-full flex items-center">
       <div className="container mx-auto max-w-5xl px-4 flex items-center">
         <div className="flex flex-col space-y-4 font-primary w-full">
           {/* Vim Command Line */}

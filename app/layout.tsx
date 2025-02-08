@@ -33,9 +33,9 @@ export default function RootLayout({
           footerAction: "text-uk-blue-light hover:text-uk-blue-dark",
         }
       }}>
-        <body className={`${ubuntuMono.variable} min-h-screen flex flex-col`}>
+        <body className={`${ubuntuMono.variable} `}>
           <Header />
-          <main className="flex-1 bg-uk-background-secondary-light">{children}</main>
+          <main >{children}</main>
           <Footer/>
         </body>
       </ClerkProvider>

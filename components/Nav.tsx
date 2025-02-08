@@ -1,40 +1,39 @@
-"use client"
+"use client";
 
 import Link from "next/link"
-import { usePathname } from "next/navigation";
-
+import { usePathname } from "next/navigation"
 
 const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
-    { name: "Message", path: "/message" },
+  { name: "Home", path: "/" },
+  { name: "Blog", path: "/blog" },
+  { name: "Contact", path: "/contact" },
+  { name: "Message", path: "/message" },
 ]
 
-
 const Nav = () => {
-    const pathName = usePathname()
-    
-    return (
-        <nav className="hidden sm:flex justify-center h-12">
-            <ul className="items-center justify-center flex bg-uk-background-secondary-light/50 rounded-full px-4 py-1.5">
-                {navItems.map((link) => (
-                    <li key={link.name}>
-                        <Link
-                            href={link.path}
-                            className={`px-6 py-2.5 rounded-full text-sm tracking-wide transition-all duration-200 ${
-                                link.path === pathName 
-                                    ? 'bg-uk-background-primary-light text-uk-label-primary-light font-medium' 
-                                    : 'text-uk-label-secondary-light hover:bg-uk-background-primary-light/50 hover:text-uk-label-primary-light'
-                            }`}
-                        >
-                            {link.name}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    )
+  const pathname = usePathname()
+
+  return (
+    <nav className="hidden sm:block mx-auto p-[clamp(0.25rem,1vw,0.5rem)] rounded-full shadow-md bg-uk-background-primary-light max-w-[min(90vw,28rem)]">
+      <ul className="flex items-center justify-around space-x-[clamp(0.25rem,2vw,1rem)]">
+        {navItems.map((item) => (
+          <li key={item.path} className="relative text-center font-primary">
+            <Link href={item.path}>
+              <span
+                className={`relative z-10 px-[clamp(0.5rem,2vw,1rem)] text-[clamp(0.8rem,2vw,1rem)] cursor-pointer transition-all ${
+                  pathname === item.path
+                    ? "text-blue-600 font-medium"
+                    : "text-gray-600 hover:text-blue-600"
+                }`}
+              >
+                {item.name}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
 }
 
 export default Nav

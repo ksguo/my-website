@@ -1,64 +1,54 @@
+"use client"
+
+import Link from "next/link"
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs"
+import { LuCircleUserRound } from "react-icons/lu";
+import Nav from "./Nav"
+import MobileNav from "./MobileNav"
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar"
 
-//components
-import Nav from "./Nav"
-import Link from "next/link";
-
-
-
-
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
-import { Button } from "./ui/button"
-import MobileNav from "./MobileNav";
-
-const Header = () => {
-    return (
-      <header className="py-6 bg-uk-background-secondary-light text-black">
-        {/* Container */}
-        <div className="container mx-auto max-w-5xl px-4 flex items-center">
-          {/* Logo */}
-          <div className="w-1/5">
+export default function Header() {
+  return (
+    <header className="sticky top-0 z-50 w-full bg-uk-background-primary-light ">
+      <div className="container mx-auto max-w-7xl px-4 py-4 flex ">
+        
+        {/* Left Section (Avatar / MobileNav) */}
+        <div className="flex items-center space-x-4">
+          {/* Avatar hidden on small screens */}
+          <div className="hidden sm:block">
             <Link href="/">
-              <Avatar className="h-16 w-16 border-2 border-white hover:scale-110 transition-transform">
+              <Avatar className="h-12 w-12 hover:scale-110 transition-transform">
                 <AvatarImage src="/avatar.png" alt="Kesheng" />
                 <AvatarFallback>KS</AvatarFallback>
               </Avatar>
             </Link>
           </div>
-          <div className="w-3/5 flex justify-center">
-            {/* Navigation */}
-            <Nav />
+          
+          {/* Mobile Nav visible on small screens only */}
+          <div className="block sm:hidden">
+            <MobileNav />
           </div>
-          <div className="w-1/5 flex justify-end">
-            {/* Sign In Button */}
-            <SignedOut>
-              <SignInButton mode="modal">
-                 <Button 
-                className="px-6 py-2.5 rounded-full text-sm tracking-wide transition-all duration-200 
-          text-uk-label-secondary-light hover:bg-uk-background-primary-light/50 hover:text-uk-label-primary-light"
-              variant="ghost"
-               >
-              Sign In
-                </Button>
-             </SignInButton>
-            </SignedOut>
-            <SignedIn>
-            <UserButton 
-              appearance={{
-               elements: {
-          userButtonAvatarBox: "w-9 h-9"
-               }
-             }}
-           afterSignOutUrl="/"
-         />
-          </SignedIn>
-            </div>
-            {/* Mobile Navigation */}
-            <div className="xl:hidden">
-              <MobileNav />
-              </div>
         </div>
-      </header>
-    );
+
+        {/* Center Section (Nav) - hidden on small screens */}
+        <div className="flex-1 hidden sm:block">
+          <Nav />
+        </div>
+
+        {/* Right Section (Sign In / User Button) */}
+        <div className="flex items-center space-x-4">
+          <SignedOut>
+            <SignInButton mode="modal">
+            <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+                <LuCircleUserRound className="w-6 h-6 text-uk-gray5-dark hover:text-gray-800" />
+              </button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+        </div>
+      </div>
+    </header>
+  )
 }
-export default Header;
