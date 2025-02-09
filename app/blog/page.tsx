@@ -1,70 +1,58 @@
-const About = () => {
-    return (
-      <section className="bg-uk-background-primary-light h-full flex items-center">
-        <div className="container mx-auto max-w-5xl px-4 min-h-[calc(100vh-88px)] flex items-center">
-          <div className="flex flex-col space-y-4 font-primary">
-            <div className="flex flex-col space-y-2 text-lg">
-              {/* First Command */}
-              <div className="flex items-center space-x-2">
-                <span className="text-uk-cyan-light">➜</span>
-                <span className="text-uk-blue-light">~</span>
-                <span className="text-uk-label-primary-light">$</span>
-                <span>./welcome.bash</span>
-              </div>
-              
-              {/* Welcome Response */}
-              <div className="pl-4">
-                <span className="text-uk-purple-light">echo</span>
-                <span className="text-uk-grey6-dark"> &quot;Welcome to my portfolio!&quot;</span>
-              </div>
+import { client } from "@/lib/client"
+import { type SanityDocument } from "next-sanity"
+import Image from "next/image"
+import Link from "next/link"
 
-              {/* Second Command */}
-              <div className="flex items-center space-x-2">
-                <span className="text-uk-cyan-light">➜</span>
-                <span className="text-uk-blue-light">~</span>
-                <span className="text-uk-label-primary-light">$</span>
-                <span>whoami</span>
-              </div>
+const POSTS_QUERY = `*[
+  _type == "post" 
+  && defined(slug.current)
+] | order(publishedAt desc)[0...12]{
+  _id,
+  title,
+  "slug": slug.current,
+  publishedAt,
+  description,
+  "imageUrl": image.asset->url
+}`
 
-              {/* Developer Info */}
-              <div className="pl-4 space-y-2">
-                <p><span className="text-uk-purple-light">const</span> developer = {`{`}</p>
-                <p className="pl-4">name: <span className="text-uk-indigo-light"> &quot;Kesheng Guo&quot;</span>,</p>
-                <p className="pl-4">role: <span className="text-uk-indigo-light"> &quot;Software Developer &quot;</span>,</p>
-                <p className="pl-4">location: <span className="text-uk-indigo-light"> &quot;Cologne&quot;</span>,</p>
-                <p className="pl-4">interests: [<span className="text-uk-indigo-light"> &quot;Web Development &quot;</span>, <span className="text-uk-indigo-light"> &quot;Open Source&quot;</span>],</p>
-                <p className="pl-4">skills: [<span className="text-uk-indigo-light"> &quot;React &quot;</span>, <span className="text-uk-indigo-light"> &quot;Next.js &quot;</span>, <span className="text-uk-indigo-light"> &quot;TypeScript &quot;</span>]</p>
-                <p>{`}`}</p>
-              </div>
+const options = { next: { revalidate: 30 } }
 
-              {/* Third Command */}
-              <div className="flex items-center space-x-2">
-                <span className="text-uk-cyan-light">➜</span>
-                <span className="text-uk-blue-light">~</span>
-                <span className="text-uk-label-primary-light">$</span>
-                <span>./introduction.bash</span>
-              </div>
+export default async function BlogPage() {
+  const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY, {}, options)
 
-              {/* Introduction Response */}
-              <div className="pl-4">
-                <p className="text-uk-grey6-dark">
-                &quot;Hi, I am currently a master&apos;s student in Information Systems at the University of Göttingen. I achieved my bachelor&apos;s degree from the University of Cologne.
-                I am a passionate Full Stack Developer with a strong focus on Frontend Development. Proficient in React, Next.js, and TypeScript, I specialize in building dynamic and user-friendly web applications.&quot;
-                </p>
-              </div>
 
-              {/* Cursor Line */}
-              <div className="flex items-center space-x-2">
-                <span className="text-uk-cyan-light">➜</span>
-                <span className="text-uk-blue-light">~</span>
-                <span className="text-uk-label-primary-light">$</span>
-                <span className="animate-pulse">█</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
+
+  return (
+    <main className="container mx-auto min-h-screen max-w-3xl p-8">
+      <h1 className="text-4xl font-bold mb-8">Latest Posts</h1>
+      <ul className="flex flex-col gap-y-6">
+        {posts.map((post) => (
+          <li
+            key={post._id}
+            className="p-4 bg-white rounded-lg shadow hover:shadow-lg hover:underline transition"
+          >
+            <Link href={`/blog/${post.slug}`}>
+              {/* Render Image only if a url is present */}
+              {post.imageUrl && (
+                <div className="mb-4">
+                  <Image
+                    src={post.imageUrl}
+                    alt={post.title}
+                    width={600}
+                    height={400}
+                    className="w-full h-auto object-cover rounded"
+                  />
+                </div>
+              )}
+              <h2 className="text-2xl font-semibold">{post.title}</h2>
+              <p className="text-gray-500 text-sm mt-1">
+                {new Date(post.publishedAt).toLocaleDateString()}
+                {post.description && ` - ${post.description}`}
+              </p>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </main>
+  )
 }
-
-export default About

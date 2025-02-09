@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import typography from '@tailwindcss/typography';
 
 const UIKitColors = {
   red: {
@@ -187,9 +188,12 @@ const config: Config = {
           bg_opacity: 'var(--bg-opacity)',
         },
       }
-    },
+    }
   },
-  plugins: [],
+  plugins: [
+    typography,
+    // ...
+  ],
 };
 
 export default config;

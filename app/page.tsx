@@ -4,6 +4,8 @@ import About from '@/components/About';
 
 
 
+
+
 export default function Home() {
   return (
     <section className="bg-uk-background-primary-light">

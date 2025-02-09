@@ -14,7 +14,7 @@ const Map: React.FC = () => {
   // 50.921918 lat, 6.930111 lon
   const lng = 6.930111
   const lat = 50.921918
-  const zoom = 12
+  const zoom = 8
 
   
 
@@ -27,6 +27,8 @@ const Map: React.FC = () => {
       style: 'mapbox://styles/mapbox/standard',
       center: [lng, lat],
       zoom,
+      attributionControl: false,
+      
     })
 
     map.on("load", () => {
