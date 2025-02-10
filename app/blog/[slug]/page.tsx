@@ -20,15 +20,15 @@ export default async function PostPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
-  // 获取文档
+  // fetch post by slug
   const slugParam = await params
   const post = await client.fetch<SanityDocument>(POST_QUERY, slugParam, options)
   
-  // 如果未找到对应 post
+  // when not find the  post
   if (!post) {
     return (
       <main className="container mx-auto min-h-screen max-w-3xl p-8">
-        <Link href="/" className="hover:underline">
+        <Link href="/blog" className="hover:underline">
           ← Back to posts
         </Link>
         <h1 className="text-2xl font-bold mt-4">Post not found</h1>

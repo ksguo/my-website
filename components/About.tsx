@@ -1,4 +1,4 @@
-'use client'
+
 
 import { CssIcon } from "@/public/assets/icons/CssIcon";
 import { GitIcon } from "@/public/assets/icons/GitIcon";
@@ -18,7 +18,14 @@ import { FastAPIIcon } from "@/public/assets/icons/FastAPIIcon";
 
 import Map from "./Map";
 
+
+import { client } from "@/lib/client"
+import { type SanityDocument } from "next-sanity"
 import Link from "next/link";
+import Image from "next/image";
+
+
+
 
 
 
@@ -40,57 +47,62 @@ const TechStackIcon = [
 
 
 ]
+const POSTS_QUERY = `*[
+    _type == "post" 
+    && defined(slug.current)
+  ] | order(publishedAt desc)[0...12]{
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    description,
+    "imageUrl": image.asset->url
+  }`
 
-const sampleBlogs = [
-    {
-        id: 1,
-        title: "Exploring Next.js: A Beginner's Guide",
-        excerpt: "Learn the basics of Next.js, from setup to deployment.",
-        slug: "exploring-nextjs",
-        publishedAt: "2025-02-01",
-        coverImage: "/blog/nextjs-guide.jpg",
-    },
-    {
-        id: 2,
-        title: "Understanding React Server Components",
-        excerpt: "A deep dive into how React Server Components improve performance.",
-        slug: "react-server-components",
-        publishedAt: "2025-01-28",
-        coverImage: "/blog/react-server-components.jpg",
-    },
-];
+const options = { next: { revalidate: 30 } }
 
 
 
-const About = () => {
+
+
+export default async function About() {
+    const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY, {}, options)
     return (
         <div className="container mx-auto max-w-7xl px-4 py-16 grid grid-cols-3 gap-6">
-            {/* Left Side - Split into two sections */}
-            <div className="col-span-2 grid grid-rows-2 gap-6">
-                {/* Top - Latest Blog (Takes More Space) */}
-                <Link href={`/blog/${sampleBlogs[0].slug}`} className="block">
-                    <div className="bg-uk-background-primary-light shadow-lg rounded-2xl overflow-hidden hover:scale-[1.02] transition-transform duration-200 h-full flex flex-col">
-                        
-                        <div className="p-6 flex flex-col flex-grow">
-                            <h3 className="text-xl font-bold">{sampleBlogs[0].title}</h3>
-                            <p className="text-gray-500 text-base mt-2">{sampleBlogs[0].excerpt}</p>
-                            <span className="text-sm text-gray-400 mt-auto">{sampleBlogs[0].publishedAt}</span>
-                        </div>
-                    </div>
-                </Link>
-
-                {/* Bottom - Second Latest Blog */}
-                <Link href={`/blog/${sampleBlogs[1].slug}`} className="block">
-                    <div className="bg-uk-background-primary-light shadow-lg rounded-2xl overflow-hidden hover:scale-[1.02] transition-transform duration-200 h-full flex flex-col">
-                        
-                        <div className="p-6 flex flex-col flex-grow">
-                            <h3 className="text-lg font-bold">{sampleBlogs[1].title}</h3>
-                            <p className="text-gray-500 text-sm mt-2">{sampleBlogs[1].excerpt}</p>
-                            <span className="text-sm text-gray-400 mt-auto">{sampleBlogs[1].publishedAt}</span>
-                        </div>
-                    </div>
-                </Link>
-            </div>
+        {/* blog list */}
+        <div className="col-span-2 grid grid-rows-2 gap-6 h-full">
+          {posts.map((post) => (
+            <Link
+              key={post._id}
+              href={`/blog/${post.slug}`}
+              className=" bg-uk-background-primary-light shadow-lg rounded-2xl 
+                         overflow-hidden hover:scale-[1.02] transition-transform duration-200
+                         flex flex-col h-full"
+            >
+              {post.imageUrl && (
+                <div className="relative w-full min-h-80">
+                  <Image
+                    src={post.imageUrl}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-bold">{post.title}</h3>
+                <p className="text-gray-500 text-sm mt-2 line-clamp-2">
+                  {post.description || "No description available."}
+                </p>
+                <span className="text-sm text-gray-400 mt-auto">
+                  {new Date(post.publishedAt).toLocaleDateString()}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+                    
+            
 
             {/* Right Side */}
             <div className="flex flex-col gap-8">
@@ -124,7 +136,7 @@ const About = () => {
 };
 
 
-export default About;
+
 
 
 
