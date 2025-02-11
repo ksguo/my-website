@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-uk-background-primary-light ">
       <div className="container mx-auto max-w-7xl px-4 py-4 flex ">
-        
+
         {/* Left Section (Avatar / MobileNav) */}
         <div className="flex items-center space-x-4">
           {/* Avatar hidden on small screens */}
@@ -23,7 +23,7 @@ export default function Header() {
               </Avatar>
             </Link>
           </div>
-          
+
           {/* Mobile Nav visible on small screens only */}
           <div className="block sm:hidden">
             <MobileNav />
@@ -36,11 +36,11 @@ export default function Header() {
         </div>
 
         {/* Right Section (Sign In / User Button) */}
-        <div className="flex items-center space-x-4">
+        <div className="sm:flex items-center space-x-4 sm:relative absolute right-4 ">
           <SignedOut>
             <SignInButton mode="modal">
-            <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <LuCircleUserRound className="w-6 h-6 text-uk-gray5-dark hover:text-gray-800" />
+              <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+                <LuCircleUserRound className="w-6 h-6 text-uk-gray5-dark hover:text-uk-gray5-dark" />
               </button>
             </SignInButton>
           </SignedOut>

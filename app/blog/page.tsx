@@ -26,7 +26,7 @@ export default async function BlogPage() {
 
   return (
     <main className="container mx-auto min-h-screen max-w-4xl p-8">
-      <h1 className="text-3xl font-primary mb-8">Latest Posts</h1>
+      <h1 className="text-3xl font-primary mb-8">Blog</h1>
       <BlogList posts={posts} />
     </main>
   )

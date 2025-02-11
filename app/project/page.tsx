@@ -1,6 +1,6 @@
 
 
-const Message = () => {
+const Project = () => {
   return (
     <div>
       projects
@@ -8,4 +8,4 @@ const Message = () => {
   )
 }
 
-export default Message
+export default Project

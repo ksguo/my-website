@@ -70,7 +70,7 @@ export default async function About() {
     return (
         <div className="container mx-auto max-w-7xl px-4 py-16 grid grid-cols-3 gap-6">
         {/* blog list */}
-        <div className="col-span-2 grid grid-rows-2 gap-6 h-full">
+        <div className="col-span-2 grid grid-rows-2 gap-4 h-full">
           {posts.map((post) => (
             <Link
               key={post._id}
@@ -105,9 +105,9 @@ export default async function About() {
             
 
             {/* Right Side */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-8 ">
                 {/* About Me */}
-                <div className="bg-uk-background-primary-light shadow-lg rounded-2xl p-6">
+                <div className="bg-uk-background-primary-light shadow-lg rounded-2xl p-6 ">
                     <h2 className="text-[clamp(0.8rem,4vw,1.6rem)] font-primary">💡 About Me</h2>
                     <ul className="flex flex-col gap-5 pl-6 text-[clamp(0.8rem,2vw,1rem)] list-disc">
                         <li>👋 You can call me <span className="font-primary">Kesheng</span></li>
