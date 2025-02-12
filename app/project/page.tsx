@@ -3,7 +3,7 @@
 const Project = () => {
   return (
     <div>
-      projects
+      tbd
     </div>
   )
 }
