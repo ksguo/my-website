@@ -18,7 +18,8 @@ export default function Header() {
           <div className="hidden sm:block">
             <Link href="/">
               <Avatar className="h-12 w-12 hover:scale-110 transition-transform">
-                <AvatarImage src="/avatar.png" alt="Kesheng" />
+                <AvatarImage src="/avatar.png" width={32}
+                  height={32} alt="Kesheng" className="w-full h-full object-cover" />
                 <AvatarFallback>KS</AvatarFallback>
               </Avatar>
             </Link>
